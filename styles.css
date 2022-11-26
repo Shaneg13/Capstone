@@ -1,8 +1,8 @@
 body {
-    background-color: rgb(90, 91, 100);
+    background-color: whitesmoke;
 }
+
 header {
-    text-align: center;
     border: solid 2px;
     background-color: black;
 }
@@ -16,25 +16,24 @@ img.center {
 }
 
 body {
-    color: white;
+    color: black;
 }
 
 h1, h2, h3 {
     color: aqua;
     text-align: center;
-}
-h3 {
-    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 a:link {
-    color: white;
+    color: black;
     font-size: large;
 }
 
 a:hover {
     border-bottom: 1px solid;
-    background: white;
+    background: beige;
 }
 
 a:active {
@@ -46,6 +45,7 @@ nav.container {
     border-color: black;
     text-align: center;
     padding-top: 10px;
+    justify-content: space-evenly;
 }
 
 footer {
@@ -53,14 +53,13 @@ footer {
     color: aqua;
 }
 
-.pc-content {
+/* .pc-content {
     text-align: center;
-}
+} */
 
 ul {
-    padding-top: 10px;
+padding-right: 40px;
     text-align: center;
-
 }
 .my-build {
     text-align: center;
