@@ -1,7 +1,6 @@
 import html from "html-literal";
 
 export default () => html`
-  <footer>
-    <h4>MotoMind 2022.</h4>
-  </footer>
+  <h2>Mapquest Interactive Map</h2>
+  <div id="map"></div>
 `;
