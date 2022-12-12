@@ -52,7 +52,7 @@ footer {
 }
 
 #map {
-  height: 600px;
+  height: 700px;
 }
 
 @media (max-width: 549px) {
@@ -110,16 +110,16 @@ body {
   background-color: whitesmoke;
 }
 
-/* header {
-  border: solid 100px;
+header {
+  border: solid 1px;
   background-color: black;
-} */
+}
 
 img.center {
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
+  width: 70%;
   background-color: black;
+  border-color: black;
+  max-block-size: 800px;
 }
 
 .logo {
@@ -148,8 +148,6 @@ a:hover {
   background: beige;
 }
 .timer {
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  height: auto;
+  max-width: 100%;
+  max-block-size: 850px;
 }
