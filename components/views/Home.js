@@ -2,8 +2,10 @@ import html from "html-literal";
 import Harley from "../../assets/image/Harley.png";
 export default (state) => html`
   <section id="jumbotron">
-    <h1><img src="${Harley}" class="timer" /></h1>
-    <h1>I could put anything here</h1>
+    <div>
+      <h1><img src="${Harley}" class="timer" /></h1>
+      <h1>I could put anything here</h1>
+    </div>
 
     <a href="index.html"></a>
     <h3>
