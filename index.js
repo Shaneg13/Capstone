@@ -32,7 +32,7 @@ function afterRender(state) {
 
       console.log("matsinet-event:", event);
 
-      // directionList.classList.toggle("directions");
+      directionList.classList.toggle("directions");
       const inputList = event.target.elements;
       console.log("Input Element List", inputList);
 
