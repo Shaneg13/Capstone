@@ -14,16 +14,3 @@ export default (links) => html`
     </ul>
   </nav>
 `;
-
-// <!-- <nav>
-// <i class="fas fa-bars"></i>
-// <ul class="hidden--mobile nav-links">
-//   <li><a href="">Home</a></li>
-//   <li><a href="#form">Contact</a></li>
-//   <li><a href="https://github.com/" target="blank">GitHub</a></li>
-//   <li>
-//     <a href="https://developer.mozilla.org/en-US/" target="blank">MDN</a>
-//   </li>
-// </ul>
-// </nav> -->
-// <!-- </nav>
