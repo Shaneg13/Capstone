@@ -1,18 +1,44 @@
 import html from "html-literal";
 import Harley from "../../assets/image/Harley.png";
+import Stance from "../../assets/image/Stance.png";
 export default (state) => html`
   <section id="jumbotron">
-    <div>
+    <div class="container">
+      <!-- <button type="Click Here" class="btn" onclick="openPopup()">
+        Start Route
+      </button>
+      <div class="popup" id="popup">
+        <h2>Start Route</h2>
+        <p>Your route has been saved!</p>
+        <button type="button" onclick="closePopup()">Ok</button>
+      </div>
+    </div>
+
+    <script>
+      let popup = document.getElementById("popup");
+
+      function openPopup() {
+        popup.classList.add("open-popup");
+      }
+
+      function closePopup() {
+        popup.classList.add("close-popup");
+      }
+    </script>
+    <div> -->
       <h1><img src="${Harley}" class="timer" /></h1>
+      <!-- <h1><img src="${Stance}" class="stancer" /></h1> -->
       <h1>I could put anything here</h1>
     </div>
 
     <a href="index.html"></a>
-    <h3>
-      The weather in ${state.weather.city} is ${state.weather.description}. The
-      temperature is ${state.weather.temp}F, and it feels like
-      ${state.weather.feelsLike}F.
-    </h3>
+    <div class="weather">
+      <h3>
+        The weather in ${state.weather.city} is ${state.weather.description}.
+        The temperature is ${state.weather.temp}F, and it feels like
+        ${state.weather.feelsLike}F.
+      </h3>
+    </div>
   </section>
 `;
 // </section>

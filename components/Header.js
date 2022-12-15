@@ -1,5 +1,5 @@
 import html from "html-literal";
-import motomind from "../assets/image/motomind2.png";
+import motomind from "../assets/image/MMBanner.png";
 
 export default (state) => html`
   <header>

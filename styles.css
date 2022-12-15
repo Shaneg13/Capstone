@@ -4,7 +4,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 90vh;
 }
 
 #jumbotron > h2 {
@@ -64,6 +63,8 @@ footer {
     display: flex;
     align-items: center;
     flex-direction: column;
+    background-color: black;
+    color: white;
   }
 
   nav > i {
@@ -89,6 +90,7 @@ footer {
     display: flex;
     justify-content: space-evenly;
     padding: 0 0;
+    background-color: black;
   }
 
   nav > ul > li {
@@ -107,19 +109,18 @@ img.moto {
 }
 
 body {
-  background-color: whitesmoke;
+  background-color: white;
 }
 
 header {
-  border: solid 1px;
-  background-color: black;
+  background-color: white;
 }
 
 img.center {
-  width: 70%;
-  background-color: black;
   border-color: black;
-  max-block-size: 700px;
+  max-block-size: 500px;
+  object-fit: contain;
+  max-width: 100%;
 }
 
 .logo {
@@ -127,6 +128,7 @@ img.center {
 
 body {
   color: black;
+  border: solid 5px;
 }
 
 h1,
@@ -139,15 +141,15 @@ h3 {
 }
 
 a:link {
-  color: black;
-  font-size: large;
+  font-size: xx-large;
+  color: white;
 }
 
-a:hover {
-  border-bottom: 1px solid;
-  background: beige;
+a:visited {
+  color: white;
 }
 .timer {
   max-width: 100%;
-  max-block-size: 850px;
+  max-block-size: 1000px;
+  object-fit: contain;
 }
