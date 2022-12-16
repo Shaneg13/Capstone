@@ -153,3 +153,14 @@ a:visited {
   max-block-size: 1000px;
   object-fit: contain;
 }
+.top {
+  color: black !important;
+}
+
+.directions {
+  font-size: x-large;
+  font-weight: bold;
+}
+.fixit {
+  text-align: center;
+}
