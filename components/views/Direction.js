@@ -1,11 +1,11 @@
 import html from "html-literal";
 
 export default (state) => html`
-  <h2>Input the Starting Location and The Desired Destination!</h2>
+  <h2>Lets Build and Map Your Ride!</h2>
   <form id="direction" method="POST" action="">
     <div id="fromLocation">
       <h3>Starting Location</h3>
-      <div>
+      <div class="fixit">
         <label for="fromStreet">Street: </label>
         <input
           type="text"
@@ -31,9 +31,7 @@ export default (state) => html`
           required
         />
       </div>
-    </div>
-    <div id="toLocation">
-      <h3>Final Location</h3>
+      <!-- <h3>Add a Second Location</h3>
       <div>
         <label for="toStreet">Street: </label>
         <input
@@ -61,21 +59,46 @@ export default (state) => html`
         />
       </div>
     </div>
-    <input type="submit" name="showDirections" value="Show Directions" />
-    <input type="submit" name="showRoute" value="Show Route" />
+    <div id="toLocation"> -->
+      <h3>Final Location</h3>
+      <div class="fixit">
+        <label for="toStreet">Street: </label>
+        <input
+          type="text"
+          name="toStreet"
+          id="toStreet"
+          placeholder="Enter Street Address"
+          required
+        />
+        <label for="toCity">City: </label>
+        <input
+          type="text"
+          name="toCity"
+          id="toCity"
+          placeholder="Enter City"
+          required
+        />
+        <label for="toState">State: </label>
+        <input
+          type="text"
+          name="toState"
+          id="toState"
+          placeholder="Enter State Initials"
+          required
+        />
+      </div>
+    </div>
+    <div class="fixit">
+      <input type="submit" name="showDirections" value="Show Directions" />
+      <input type="submit" name="showRoute" value="Show Route" />
+    </div>
   </form>
-
-  <h2>Here are your directions</h2>
+  <h2>Here are your listed directions</h2>
   <div class="directions">
     <ul class="directions">
-      ${checkDirection(state.directions.maneuver)}
+      ${checkDirection(state.directions.maneuvers)}
     </ul>
   </div>
-  <h3>
-    The weather in ${state.weather.city} is ${state.weather.description}. The
-    temperature is ${state.weather.temp}F, and it feels like
-    ${state.weather.feelsLike}F.
-  </h3>
 `;
 
 function checkDirection(maneuvers) {
@@ -84,5 +107,6 @@ function checkDirection(maneuvers) {
       (leg) => `<li>${leg.narrative}<br/><img src="${leg.mapUrl}"></li>`
     );
   }
+
   return `Please Submit Addresses Above!`;
 }

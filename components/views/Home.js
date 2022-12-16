@@ -26,6 +26,7 @@ export default (state) => html`
       }
     </script>
     <div> -->
+      <div></div>
       <h1><img src="${Harley}" class="timer" /></h1>
       <!-- <h1><img src="${Stance}" class="stancer" /></h1> -->
       <h1>I could put anything here</h1>
@@ -41,6 +42,7 @@ export default (state) => html`
     </div>
   </section>
 `;
+
 // </section>
 // <!-- <img id="pc-picture" />
 //   <h1>Information</h1>
