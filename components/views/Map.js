@@ -1,6 +1,6 @@
 import html from "html-literal";
 
 export default () => html`
-  <h2>Mapquest Interactive Map</h2>
+  <h2>Route Planner</h2>
   <div id="map"></div>
 `;

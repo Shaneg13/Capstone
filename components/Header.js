@@ -12,12 +12,3 @@ export default (state) => html`
 // var src = document.getElementById("header");
 // src.appendChild(img);
 // {
-//   /* <header>
-//             <nav class="container">
-//                 <nav class="container">
-//                     <a href="index.html">Home</a>
-//                     <a href="bio.html">Riders Page</a>
-//                 </nav>
-//             <h1><img src="motomind2.png" class = "center"/></h1>
-//         </header> */
-// }

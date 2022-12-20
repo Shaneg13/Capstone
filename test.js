@@ -91,120 +91,33 @@ function afterRender(state) {
 
     L.mapquest.key = process.env.MAPQUEST_API_KEY;
 
-    // // 'map' refers to a <div> element with the ID map
-
-    let map = L.mapquest.map("map", {
-      center: [42.361145, -71.057083],
+    // 'map' refers to a <div> element with the ID map
+    const map = L.mapquest.map("map", {
+      center: [37.7749, -122.4194],
       layers: L.mapquest.tileLayer("map"),
-      zoom: 14,
-      zoomControl: true,
+      zoom: 7,
     });
 
-    let directionsControl = L.mapquest
-      .directionsControl({
-        className: "",
-        directions: {
-          options: {
-            timeOverage: 25,
-            doReverseGeocode: false,
-          },
-        },
-        directionsLayer: {
-          startMarker: {
-            title: "Drag to change location",
-            draggable: true,
-            icon: "marker-start",
-            iconOptions: {
-              size: "sm",
-            },
-          },
-          endMarker: {
-            draggable: true,
-            title: "Drag to change location",
-            icon: "marker-end",
-            iconOptions: {
-              size: "sm",
-            },
-          },
-          viaMarker: {
-            title: "Drag to change route",
-          },
-          routeRibbon: {
-            showTraffic: true,
-          },
-          alternateRouteRibbon: {
-            showTraffic: true,
-          },
-          paddingTopLeft: [450, 20],
-          paddingBottomRight: [180, 20],
-        },
-        startInput: {
-          compactResults: true,
-          disabled: false,
-          location: {},
-          placeholderText: "Starting point or click on the map...",
-          geolocation: {
-            enabled: true,
-          },
-          clearTitle: "Remove starting point",
-        },
-        endInput: {
-          compactResults: true,
-          disabled: false,
-          location: {},
-          placeholderText: "Destination",
-          geolocation: {
-            enabled: true,
-          },
-          clearTitle: "Remove this destination",
-        },
-        addDestinationButton: {
-          enabled: true,
-          maxLocations: 10,
-        },
-        routeTypeButtons: {
-          enabled: true,
-        },
-        reverseButton: {
-          enabled: true,
-        },
-        optionsButton: {
-          enabled: true,
-        },
-        routeSummary: {
-          enabled: true,
-          compactResults: false,
-        },
-        narrativeControl: {
-          enabled: true,
-          compactResults: false,
-          interactive: true,
-        },
-      })
-
-      .addTo(map);
-    // const maps = L.mapquest.map("map", {
-    //   center: [42.361145, -71.057083],
-    //   layers: L.mapquest.tileLayer("map"),
-    //   zoom: 9,
-    // });
+    map.addControl(L.mapquest.control());
 
     L.mapquest.directions().route({
-      start: "",
-      end: "",
-      waypoints: ["", ""],
+      start: "29 Middle St, Newton, MA 02458",
+      end: "29 Middle St, Newton, MA 02458",
+      waypoints: [
+        "166 Newbury St, Framingham, MA 01701",
+        "1111 Great Plain Ave, Needham, MA 02492",
+      ],
     });
-
     if (state.view === "Map") {
-      const mapEntry = document.querySelector("form");
-      const mapdirectionList = document.querySelector(".maps");
+      const formEntry = document.querySelector("form");
+      const directionList = document.querySelector(".maps");
 
-      mapEntry.addEventListener("submit", async (event) => {
+      formEntry.addEventListener("submit", async (event) => {
         event.preventDefault();
 
         console.log("shane-event:", event);
 
-        mapdirectionList.classList.toggle("maps");
+        directionList.classList.toggle("maps");
         const inputList = event.target.elements;
         console.log("Input Element List", inputList);
 
@@ -234,13 +147,13 @@ function afterRender(state) {
 
           axios
             .get(
-              `"http://www.mapquestapi.com/directions/v2/route?key="${process.env.MAPQUEST_API_KEY}&from=${from.street},${from.city},${from.state}&to=${to.street},+${to.city},+${to.state}`
+              `http://www.mapquestapi.com/directions/v2/route?key=${process.env.MAPQUEST_API_KEY}&from=${from.street},${from.city},${from.state}&to=${to.street},+${to.city},+${to.state}`
             )
             .then((response) => {
               store.Direction.directions = response.data;
               store.Direction.directions.maneuvers =
                 response.data.route.legs[0].maneuvers;
-              router.navigate("/Map");
+              router.navigate("/Direction");
             })
             .catch((error) => {
               console.log("It puked", error);
@@ -248,7 +161,7 @@ function afterRender(state) {
         }
 
         if (event.submitter.name === "showRoute") {
-          router.navigate("/Map");
+          router.navigate("/Route");
         }
       });
     }

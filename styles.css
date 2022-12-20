@@ -51,6 +51,7 @@ footer {
 }
 
 #map {
+  padding-top: 200px;
   height: 700px;
 }
 
@@ -163,4 +164,15 @@ a:visited {
 }
 .fixit {
   text-align: center;
+  border: 10px;
+}
+.fixitagain {
+  text-align: center;
+  border: 10px;
+}
+.leaflet-control-mapquest-directions
+  .leaflet-control-mapquest-search-ahead-form {
+  position: ;
+  margin-bottom: 30px;
+  display: block;
 }
