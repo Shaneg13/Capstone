@@ -10,4 +10,5 @@ export default (state) => html`
 </ul>
 <li> <a href = "MotoMind" class = "top">Back to Home</a></li>
 </ul>
-</section>`;
+</section>
+`;

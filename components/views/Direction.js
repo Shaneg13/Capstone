@@ -93,7 +93,7 @@ export default (state) => html`
       <input type="submit" name="showRoute" value="Show Route" />
     </div>
   </form>
-  <h2>Here are your listed directions</h2>
+  <h2></h2>
   <div class="directions">
     <ul class="directions">
       ${checkDirection(state.directions.maneuvers)}
