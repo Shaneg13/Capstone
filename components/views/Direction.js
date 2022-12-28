@@ -110,3 +110,21 @@ function checkDirection(maneuvers) {
 
   return `Please Submit Addresses Above!`;
 }
+
+// <!-- <form id="route" method="POST" action="">
+// <h3>Post to Events</h3>
+// <div id="submitRoute"></div>
+// <div class="fixit">
+//   <label for="routeDescription">Event Description: </label>
+//   <input
+//     type="text"
+//     name="routeDescription"
+//     id="routeDescription"
+//     placeholder="Please enter the details about your ride"
+//     required
+//   />
+//   <label for="submit">Click Here to Post Your Event:</label>
+//   <input type="submit" name="submitRoute" value="Submit Your Route" />
+// </div>
+// </form>
+// </form> -->

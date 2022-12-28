@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const { stringify } = require("querystring");
+// const { Route } = require("../../store");
+//const { stringify } = require("querystring");
 
 const mapSchema = new mongoose.Schema({
   street: {
@@ -18,6 +19,6 @@ const mapSchema = new mongoose.Schema({
   },
 });
 
-const Map = mongoose.model("Map", mapSchema);
+const Route = mongoose.model("Route", mapSchema);
 
-module.exports = Map;
+module.exports = Route;
