@@ -4,6 +4,7 @@ import Navigo from "navigo";
 import { capitalize } from "lodash";
 import axios from "axios";
 import dotenv from "dotenv";
+import { response } from "express";
 dotenv.config();
 
 const router = new Navigo("/");
@@ -61,17 +62,17 @@ function afterRender(state) {
         https://developer.mapquest.com/documentation/directions-api/
       */
 
-        // const directionss = [];
-        // for (let input of inputList.directionss) {
+        // const directions = [];
+        // for (let input of inputList.direction) {
         //   if (input.checked) {
-        //     directionss.push(input.value);
+        //     directions.push(input);
         //   }
         // }
         // const requestData = {
-        //   state: inputList.state.value,
-        //   city: inputList.city.value,
-        //   street: inputList.street.value,
-        //   address: inputList.address.value,
+        //   state: inputList.state,
+        //   city: inputList.city,
+        //   street: inputList.street,
+        //   address: inputList.address,
         // };
         // console.log("request Body", requestData);
 
@@ -84,6 +85,7 @@ function afterRender(state) {
             store.Direction.directions = response.data;
             store.Direction.directions.maneuvers =
               response.data.route.legs[0].maneuvers;
+            store.Direction.directions.push(response.data);
             router.navigate("/Direction");
           })
           .catch((error) => {
@@ -91,7 +93,7 @@ function afterRender(state) {
             return directionList;
           });
       }
-      console.log(directionList);
+      // console.log(directionList);
 
       if (event.submitter.name === "showRoute") {
         router.navigate("/Route");
@@ -126,22 +128,22 @@ function afterRender(state) {
       );
     }
 
-    function addLayerControl(map) {
-      L.control
-        .layers(
-          {
-            Map: L.mapquest.tileLayer("map"),
-            Satellite: L.mapquest.tileLayer("satellite"),
-            Hybrid: L.mapquest.tileLayer("hybrid"),
-            Light: L.mapquest.tileLayer("light"),
-            Dark: baseLayer,
-            addLayerControl: true,
-          },
-          {},
-          { position: "topleft" }
-        )
-        .addTo(map);
-    }
+    // function addLayerControl(map) {
+    //   L.control
+    //     .layers(
+    //       {
+    //         Map: L.mapquest.tileLayer("map"),
+    //         Satellite: L.mapquest.tileLayer("satellite"),
+    //         Hybrid: L.mapquest.tileLayer("hybrid"),
+    //         Light: L.mapquest.tileLayer("light"),
+    //         Dark: baseLayer,
+    //         addLayerControl: true,
+    //       },
+    //       {},
+    //       { position: "topleft" }
+    //     )
+    //     .addTo(map);
+    // }
 
     let directionsControl = L.mapquest
       .directionsControl({
@@ -300,24 +302,25 @@ function afterRender(state) {
     //       Please refer to the documentation:
     //       https://developer.mapquest.com/documentation/directions-api/
     //     */
-    //       // axios
-    //       //   .post(
-    //       //     `http://www.mapquestapi.com/directions/v2/route?key=${process.env.MAPQUEST_API_KEY}&from=${from.street},${from.city},${from.state}&to=${to.street},+${to.city},+${to.state}/maps`
-    //       //   )
-    //       // http://www.mapquestapi.com/datamanager/v2/get-column-types?key=KEY
-    //       // .then((response) => {
-    //       //   store.Map.directions = response.data;
-    //       //   store.Map.directions.maneuvers =
-    //       //     response.data.route.legs[0].maneuvers;
-    //       //   router.navigate("/Map");
-    //       // })
-    //       // .catch((error) => {
-    //       //   console.log("It puked", error);
-    //       // });
+    //       axios
+    //         .post(
+    //           `http://www.mapquestapi.com/directions/v2/route?key=${process.env.MAPQUEST_API_KEY}&from=${from.street},${from.city},${from.state}&to=${to.street},+${to.city},+${to.state}/maps`
+    //         )
+    //         .post(`${process.env.MAPQUEST_QUEST_API_URL}/routes`)
+    //         // http://www.mapquestapi.com/datamanager/v2/get-column-types?key=KEY
+    //         .then((response) => {
+    //           store.Map.directions = response.data;
+    //           store.Map.directions.maneuvers =
+    //             response.data.route.legs[0].maneuvers;
+    //           router.navigate("/Map");
+    //         })
+    //         .catch((error) => {
+    //           console.log("It puked", error);
+    //         });
     //     }
-    //     // if (event.submitter === "saveMap") {
-    //     //   router.navigate("/Map");
-    //     // }
+    //     if (event.submitter === "saveMap") {
+    //       router.navigate("/Map");
+    //     }
     //   });
     // }
   }
@@ -351,6 +354,19 @@ router.hooks({
             done();
           })
           .catch((err) => console.log(err));
+        break;
+      case "Direction":
+        axios
+          .get(`${process.env.MAPQUEST_QUEST_API_URL}/routes`)
+          .then((response) => {
+            // Storing retrieved data in state
+            store.Direction.directions = response.data;
+            done();
+          })
+          .catch((error) => {
+            console.log("It puked", error);
+            done();
+          });
         break;
       default:
         done();

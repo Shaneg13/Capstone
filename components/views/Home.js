@@ -9,10 +9,20 @@ export default (state) => {
   return html`
     <section id="jumbotron">
       <div class="container">
+        <div>
+          <div class="Intro">
+          <h1>Welcome to MotoMind!</h1>
+          <h3>
+            If you're looking to plan a ride, you're in the right place.
+          </h3>
+          <h3>
+            To get started, you can click on Plan Your Trip to plan a trip with
+            multiple locations. If you want to see a listed directions, click on
+            Directions.
+          </h3>
+        </div>
         <h1><img src="${slides[state.slide]}" class="timer" /></h1>
-        <!-- <h1>I could put anything here</h1> -->
       </div>
-
       <a href="index.html"></a>
       <div class="weather">
         <button id="imageloop" type="button">"Change Picture"</button>

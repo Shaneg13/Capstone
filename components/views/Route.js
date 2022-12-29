@@ -1,4 +1,5 @@
 import html from "html-literal";
+import Direction from "./Direction";
 
 export default (state) => html`
   <h2>Route Map</h2>

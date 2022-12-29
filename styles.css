@@ -44,6 +44,7 @@ footer {
 
 #bio {
   margin: 1rem;
+  text-align: center;
 }
 
 .routeMap {
@@ -178,13 +179,15 @@ a:visited {
 }
 .search-ahead-form .form-wrap {
   height: 70px;
-  width: auto;
 }
 .clear-form {
   margin: 17px;
 }
 .geolocate-btn {
   margin: 17px;
+}
+.input-container {
+  width: auto;
 }
 .leaflet-control-mapquest-directions .leaflet-control-mapquest-narrative {
   margin-bottom: 1000px;
@@ -205,4 +208,7 @@ a:visited {
 }
 .submit {
   word-wrap: break-word;
+}
+.bio {
+  text-align: center;
 }
