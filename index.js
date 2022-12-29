@@ -76,24 +76,24 @@ function afterRender(state) {
         // };
         // console.log("request Body", requestData);
 
-        axios
+        await axios
           .get(
             `http://www.mapquestapi.com/directions/v2/route?key=${process.env.MAPQUEST_API_KEY}&from=${from.street},${from.city},${from.state}&to=${to.street},+${to.city},+${to.state}`
           )
           // .post(`${process.env.MAPQUEST_API_URL}/routes`, requestData)
           .then((response) => {
+            console.log("I worked");
             store.Direction.directions = response.data;
             store.Direction.directions.maneuvers =
               response.data.route.legs[0].maneuvers;
-            store.Direction.directions.push(response.data);
+            // store.Direction.directions.push(response.data);
             router.navigate("/Direction");
           })
           .catch((error) => {
             console.log("It puked", error);
-            return directionList;
+            // return directionList;
           });
       }
-      // console.log(directionList);
 
       if (event.submitter.name === "showRoute") {
         router.navigate("/Route");
@@ -355,22 +355,30 @@ router.hooks({
           })
           .catch((err) => console.log(err));
         break;
-      case "Direction":
-        axios
-          .get(`${process.env.MAPQUEST_QUEST_API_URL}/routes`)
-          .then((response) => {
-            // Storing retrieved data in state
-            store.Direction.directions = response.data;
-            done();
-          })
-          .catch((error) => {
-            console.log("It puked", error);
-            done();
-          });
-        break;
+      // case "Direction":
+      //   axios
+      //     .get(`${process.env.MAPQUEST_QUEST_API_URL}/routes`)
+      //     .then((response) => {
+      //       // Storing retrieved data in state
+      //       store.Direction.directions = response.data;
+      //       done();
+      //     })
+      //     .catch((error) => {
+      //       console.log("It puked", error);
+      //       done();
+      //     });
+      //   break;
       default:
         done();
     }
+  },
+  already: (params) => {
+    const view =
+      params && params.data && params.data.view
+        ? capitalize(params.data.view)
+        : "Home";
+
+    render(store[view]);
   },
 });
 
@@ -382,4 +390,4 @@ router
       render(store[view]);
     },
   })
-  .resolve(); //similar to listen method in express - Defining the routs we're listening to
+  .resolve(); //similar to listen method in express - Defining the routes we're listening to

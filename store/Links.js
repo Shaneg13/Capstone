@@ -3,4 +3,5 @@ export default [
   { title: "Bio", text: "Bio" },
   { title: "Map", text: "Plan Your Trip" },
   { title: "Direction", text: "Directions" },
+  { title: "Route", text: "Route" },
 ];
