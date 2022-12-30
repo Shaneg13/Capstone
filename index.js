@@ -4,7 +4,6 @@ import Navigo from "navigo";
 import { capitalize } from "lodash";
 import axios from "axios";
 import dotenv from "dotenv";
-import { response } from "express";
 dotenv.config();
 
 const router = new Navigo("/");
