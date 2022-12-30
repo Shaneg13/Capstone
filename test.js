@@ -212,3 +212,79 @@ router
     },
   })
   .resolve(); //similar to listen method in express - Defining the routs we're listening to
+
+var images = newArray("Harley.PNG", "Stance.PNG");
+var image_count = 0;
+function rollover(image_id, millisecs) {
+  var image = document.getElementById(image_id);
+
+  image.src = images[image_count];
+
+  image_count++;
+
+  if (image_count >= images.length) {
+    image_count = o;
+  }
+  setTimeout("rollover('" + image_id + "'," + millisecs + ");", millisecs);
+}
+
+function rollover(slides, secs) {
+  setTimeout([state.slides.secs[(0, 1)] + secs(2)]);
+}
+if (state.view === "Direction") {
+  const formEntry = document.querySelector("form");
+  const directionList = document.querySelector(".directions");
+
+  formEntry.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    console.log("shane-event:", event);
+
+    directionList.classList.toggle("directions");
+    const inputList = event.target.elements;
+    console.log("Input Element List", inputList);
+
+    const from = {
+      street: inputList.fromStreet.value,
+      city: inputList.fromCity.value,
+      state: inputList.fromStreet.value,
+    };
+
+    store.Direction.from = from;
+    store.Route.from = from;
+
+    const to = {
+      street: inputList.toStreet.value,
+      city: inputList.toCity.value,
+      state: inputList.toStreet.value,
+    };
+
+    store.Direction.to = to;
+    store.Route.to = to;
+
+    if (event.submitter.name === "showDirections") {
+      /*
+      Please refer to the documentation:
+      https://developer.mapquest.com/documentation/directions-api/
+    */
+
+      axios
+        .get(
+          `http://www.mapquestapi.com/directions/v2/route?key=${process.env.MAPQUEST_API_KEY}&from=${from.street},${from.city},${from.state}&to=${to.street},+${to.city},+${to.state}`
+        )
+        .then((response) => {
+          store.Direction.directions = response.data;
+          store.Direction.directions.maneuvers =
+            response.data.route.legs[0].maneuvers;
+          router.navigate("/Direction");
+        })
+        .catch((error) => {
+          console.log("It puked", error);
+        });
+    }
+
+    if (event.submitter.name === "showRoute") {
+      router.navigate("/Route");
+    }
+  });
+}

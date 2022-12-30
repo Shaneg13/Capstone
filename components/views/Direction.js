@@ -91,9 +91,14 @@ export default (state) => html`
     <div class="fixit">
       <input type="submit" name="showDirections" value="Show Directions" />
       <input type="submit" name="showRoute" value="Show Route" />
+      <label showRoute="showRoute">On Route Page</label>
     </div>
   </form>
-  <h2>Here are your listed directions</h2>
+  <h2></h2>
+
+  <div class="routeMap">
+    ${outputMap(state)}
+  </div>
   <div class="directions">
     <ul class="directions">
       ${checkDirection(state.directions.maneuvers)}
@@ -110,3 +115,32 @@ function checkDirection(maneuvers) {
 
   return `Please Submit Addresses Above!`;
 }
+
+function outputMap(state) {
+  if (typeof state.from !== "undefined" && typeof state.to !== "undefined") {
+    /*
+      Please refer to the documentation:
+      https://developer.mapquest.com/documentation/static-map-api/v5/
+    */
+
+    return `<img src="https://www.mapquestapi.com/staticmap/v5/map?key=${process.env.MAPQUEST_API_KEY}&start=${state.from.street},${state.from.city},${state.from.state}&end=${state.to.street},+${state.to.city},+${state.to.state}&description=${state.description}&size=600,400@2x" alt="">`;
+  }
+}
+
+// return html`
+//   <form id="route" method="POST" action="">
+//     <h3>Post to Events</h3>
+//     <div id="submitRoute"></div>
+//     <div class="fixit">
+//       <label for="routeDescription">Event Description: </label>
+//       <input
+//         type="text"
+//         name="routeDescription"
+//         id="routeDescription"
+//         placeholder="Please enter the details about your ride"
+//         required
+//       />
+//       <label for="submit">Click Here to Post Your Event:</label>
+//       <input type="submit" name="submitRoute" value="Submit Your Route" />
+//     </div>
+//   </form>

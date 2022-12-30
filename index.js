@@ -18,7 +18,6 @@ function render(state = store.Home) {
   afterRender(state);
   router.updatePageLinks();
 }
-
 function afterRender(state) {
   //add menu toggle to bars icon in nav bar
   document.querySelector(".fa-bars").addEventListener("click", () => {
@@ -62,18 +61,36 @@ function afterRender(state) {
         https://developer.mapquest.com/documentation/directions-api/
       */
 
-        axios
+        // const directions = [];
+        // for (let input of inputList.direction) {
+        //   if (input.checked) {
+        //     directions.push(input);
+        //   }
+        // }
+        // const requestData = {
+        //   state: inputList.state,
+        //   city: inputList.city,
+        //   street: inputList.street,
+        //   address: inputList.address,
+        // };
+        // console.log("request Body", requestData);
+
+        await axios
           .get(
             `http://www.mapquestapi.com/directions/v2/route?key=${process.env.MAPQUEST_API_KEY}&from=${from.street},${from.city},${from.state}&to=${to.street},+${to.city},+${to.state}`
           )
+          // .post(`${process.env.MAPQUEST_API_URL}/routes`, requestData)
           .then((response) => {
+            console.log("I worked");
             store.Direction.directions = response.data;
             store.Direction.directions.maneuvers =
               response.data.route.legs[0].maneuvers;
+            // store.Direction.directions.push(response.data);
             router.navigate("/Direction");
           })
           .catch((error) => {
             console.log("It puked", error);
+            // return directionList;
           });
       }
 
@@ -96,9 +113,36 @@ function afterRender(state) {
     let map = L.mapquest.map("map", {
       center: [42.361145, -71.057083],
       layers: L.mapquest.tileLayer("map"),
-      zoom: 14,
+      zoom: 11,
       zoomControl: true,
     });
+
+    // map.addControl(L.mapquest.satelliteControl());
+    map.addControl(L.mapquest.control());
+    {
+      map.addControl(
+        L.mapquest.geocodingControl({
+          position: "topleft",
+        })
+      );
+    }
+
+    // function addLayerControl(map) {
+    //   L.control
+    //     .layers(
+    //       {
+    //         Map: L.mapquest.tileLayer("map"),
+    //         Satellite: L.mapquest.tileLayer("satellite"),
+    //         Hybrid: L.mapquest.tileLayer("hybrid"),
+    //         Light: L.mapquest.tileLayer("light"),
+    //         Dark: baseLayer,
+    //         addLayerControl: true,
+    //       },
+    //       {},
+    //       { position: "topleft" }
+    //     )
+    //     .addTo(map);
+    // }
 
     let directionsControl = L.mapquest
       .directionsControl({
@@ -106,7 +150,7 @@ function afterRender(state) {
         directions: {
           options: {
             timeOverage: 25,
-            doReverseGeocode: false,
+            doReverseGeocode: true,
           },
         },
         directionsLayer: {
@@ -181,77 +225,103 @@ function afterRender(state) {
           interactive: true,
         },
       })
-
       .addTo(map);
-    // const maps = L.mapquest.map("map", {
-    //   center: [42.361145, -71.057083],
-    //   layers: L.mapquest.tileLayer("map"),
-    //   zoom: 9,
-    // });
 
-    L.mapquest.directions().route({
-      start: "",
-      end: "",
-      waypoints: ["", ""],
-    });
+    // L.mapquest
+    //   .textMarker([45, -120], {
+    //     text: "Coffee Shop",
+    //     subtext: "Iconic coffeehouse chain",
+    //     position: "right",
+    //     type: "marker",
+    //     icon: {
+    //       primaryColor: "#333333",
+    //       secondaryColor: "#333333",
+    //       size: "sm",
+    //     },
+    //   })
+    //   .addTo(map);
 
-    if (state.view === "Map") {
-      const mapEntry = document.querySelector("form");
-      const mapdirectionList = document.querySelector(".maps");
+    //THIS could be how to add points from a returned value
 
-      mapEntry.addEventListener("submit", async (event) => {
-        event.preventDefault();
+    // let directionsControl = L.mapquest
+    // .directionsControl({
+    //   className: "",
+    //   directions: {
+    //     options: {
+    //       timeOverage: 25,
+    //       doReverseGeocode: true,
 
-        console.log("shane-event:", event);
+    L.mapquest.directions().route(
+      {
+        start: [""],
+        end: [""],
+        waypoints: ["", ""],
+      }
+      //,
+      // (error, response) => {
+      //   console.log("error", error);
+      //   console.log("directions call back", response);
+      // }
+    );
 
-        mapdirectionList.classList.toggle("maps");
-        const inputList = event.target.elements;
-        console.log("Input Element List", inputList);
+    // if (state.view === "Map") {
+    //   const mapEntry = document.querySelector("form");
+    //   const mapdirectionList = document.querySelector(".map");
 
-        const from = {
-          street: inputList.fromStreet.value,
-          city: inputList.fromCity.value,
-          state: inputList.fromStreet.value,
-        };
+    //   mapEntry.addEventListener("submit", async (event) => {
+    //     event.preventDefault();
 
-        store.Direction.from = from;
-        store.Route.from = from;
+    //     console.log("shane-event:", event);
 
-        const to = {
-          street: inputList.toStreet.value,
-          city: inputList.toCity.value,
-          state: inputList.toStreet.value,
-        };
+    //     // mapdirectionList.directionList.toggle(".maps");
 
-        store.Direction.to = to;
-        store.Route.to = to;
+    //     const directionList = event.target.elements;
+    //     console.log("Direction List", directionList);
 
-        if (event.submitter.name === "showDirections") {
-          /*
-          Please refer to the documentation:
-          https://developer.mapquest.com/documentation/directions-api/
-        */
+    //     const from = {
+    //       street: directionList.fromStreet,
+    //       city: directionList.fromCity,
+    //       state: directionList.fromStreet,
+    //     };
 
-          axios
-            .get(
-              `"http://www.mapquestapi.com/directions/v2/route?key="${process.env.MAPQUEST_API_KEY}&from=${from.street},${from.city},${from.state}&to=${to.street},+${to.city},+${to.state}`
-            )
-            .then((response) => {
-              store.Direction.directions = response.data;
-              store.Direction.directions.maneuvers =
-                response.data.route.legs[0].maneuvers;
-              router.navigate("/Map");
-            })
-            .catch((error) => {
-              console.log("It puked", error);
-            });
-        }
+    //     store.Map.from = from;
+    //     store.Map.from = from;
 
-        if (event.submitter.name === "showRoute") {
-          router.navigate("/Map");
-        }
-      });
-    }
+    //     const to = {
+    //       street: directionList.toStreet,
+    //       city: directionList.toCity,
+    //       state: directionList.toStreet,
+    //     };
+
+    //     store.Map.to = to;
+    //     store.Map.to = to;
+
+    //     if (event.submitter === "saveMap") {
+    //       /*
+    //       Please refer to the documentation:
+    //       https://developer.mapquest.com/documentation/directions-api/
+    //     */
+    //       axios
+    //         .post(
+    //           `http://www.mapquestapi.com/directions/v2/route?key=${process.env.MAPQUEST_API_KEY}&from=${from.street},${from.city},${from.state}&to=${to.street},+${to.city},+${to.state}/maps`
+    //         )
+    //         .post(`${process.env.MAPQUEST_QUEST_API_URL}/routes`)
+    //         // http://www.mapquestapi.com/datamanager/v2/get-column-types?key=KEY
+    //         .then((response) => {
+    //           store.Map.directions = response.data;
+    //           store.Map.directions.maneuvers =
+    //             response.data.route.legs[0].maneuvers;
+    //           router.navigate("/Map");
+    //         })
+    //         .catch((error) => {
+    //           console.log("It puked", error);
+    //         });
+    //     }
+    //     if (event.submitter === "saveMap") {
+    //       router.navigate("/Map");
+    //     }
+    //   });
+    // }
   }
 }
 
@@ -284,9 +354,30 @@ router.hooks({
           })
           .catch((err) => console.log(err));
         break;
+      // case "Direction":
+      //   axios
+      //     .get(`${process.env.MAPQUEST_QUEST_API_URL}/routes`)
+      //     .then((response) => {
+      //       // Storing retrieved data in state
+      //       store.Direction.directions = response.data;
+      //       done();
+      //     })
+      //     .catch((error) => {
+      //       console.log("It puked", error);
+      //       done();
+      //     });
+      //   break;
       default:
         done();
     }
+  },
+  already: (params) => {
+    const view =
+      params && params.data && params.data.view
+        ? capitalize(params.data.view)
+        : "Home";
+
+    render(store[view]);
   },
 });
 
@@ -298,4 +389,4 @@ router
       render(store[view]);
     },
   })
-  .resolve(); //similar to listen method in express - Defining the routs we're listening to
+  .resolve(); //similar to listen method in express - Defining the routes we're listening to

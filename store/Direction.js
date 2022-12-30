@@ -1,5 +1,5 @@
 export default {
-  header: "Get Your Direction",
+  header: "",
   view: "Direction",
   directions: [],
 };

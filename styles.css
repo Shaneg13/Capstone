@@ -23,7 +23,7 @@ form {
   border: solid 1px black;
   display: flex;
   flex-direction: column;
-  margin: 1rem 1rem;
+  margin: 0.5rem;
 }
 
 form > * {
@@ -44,6 +44,7 @@ footer {
 
 #bio {
   margin: 1rem;
+  text-align: center;
 }
 
 .routeMap {
@@ -156,13 +157,15 @@ a:visited {
 }
 .top {
   color: black !important;
+  font-size: 20px !important;
 }
 
 .directions {
   font-size: x-large;
   font-weight: bold;
 }
-.fixit {
+.fixit,
+.mapform {
   text-align: center;
   border: 10px;
 }
@@ -172,7 +175,40 @@ a:visited {
 }
 .leaflet-control-mapquest-directions
   .leaflet-control-mapquest-search-ahead-form {
-  position: ;
   margin-bottom: 30px;
-  display: block;
+}
+.search-ahead-form .form-wrap {
+  height: 70px;
+}
+.clear-form {
+  margin: 17px;
+}
+.geolocate-btn {
+  margin: 17px;
+}
+.input-container {
+  width: auto;
+}
+.leaflet-control-mapquest-directions .leaflet-control-mapquest-narrative {
+  margin-bottom: 1000px;
+  max-height: none;
+  width: 360px;
+}
+.leaflet-container {
+  -webkit-text-fill-color: black;
+}
+.close-options {
+  background-color: white;
+}
+.leaflet-control-mapquest-directions {
+}
+.leaflet-left .leaflet-control {
+  position: top left;
+  margin-left: -440px;
+}
+.submit {
+  word-wrap: break-word;
+}
+.bio {
+  text-align: center;
 }
