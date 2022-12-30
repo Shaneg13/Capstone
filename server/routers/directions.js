@@ -4,7 +4,7 @@ const router = Router();
 
 // Create record in MongoDB Atlas using Mongoose.js ORM
 router.post("/", (request, response) => {
-  const newDirection = new Direction(request.body);
+  const newDirection = new Direction(requestfromData, requesttoData);
   newDirection.save((error, record) => {
     if (error) return response.status(500).json(error);
     return response.json(record);

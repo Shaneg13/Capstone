@@ -44,13 +44,22 @@ app.get("/status", (request, response) => {
   response.status(200).json({ message: "Service Healthy" });
 });
 
-app.get("/users/:id", (request, response) => {
-  // express adds a "params" Object to requests
-  const id = request.params.id;
+// app.get("/users/:id", (request, response) => {
+// express adds a "params" Object to requests
+// const id = request.params.id;
 
-  // handle GET request for post with an id of "id"
-  response.send(JSON.stringify({ user_id: is }));
-});
+// handle GET request for post with an id of "id"
+//   response.send(JSON.stringify({ user_id: is }));
+// });
+
+// app.post("/add", (request, response) => {
+//   const num1 = request.body.numberOne;
+//   const num2 = request.body.numberTwo;
+//   const responseBody = {
+//     sum: num1 + num2,
+//   };
+//   response.json(responseBody);
+// });
 
 app.post("/add", (request, response) => {
   const num1 = request.body.numberOne;
