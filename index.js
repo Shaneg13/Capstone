@@ -62,30 +62,29 @@ function afterRender(state) {
       */
 
         // const directions = [];
-        // for (let input of inputList.direction) {
+        // for (let input of inputList.directions) {
         //   if (input.checked) {
         //     directions.push(input);
         //   }
         // }
-        // const requestData = {
-        //   state: inputList.state,
-        //   city: inputList.city,
-        //   street: inputList.street,
-        //   address: inputList.address,
-        // };
-        // console.log("request Body", requestData);
+        const requestData = {
+          state: inputList.state,
+          city: inputList.city,
+          street: inputList.street,
+        };
+        console.log("request Body", requestData);
 
         await axios
           .get(
             `http://www.mapquestapi.com/directions/v2/route?key=${process.env.MAPQUEST_API_KEY}&from=${from.street},${from.city},${from.state}&to=${to.street},+${to.city},+${to.state}`
           )
-          // .post(`${process.env.MAPQUEST_API_URL}/routes`, requestData)
+          // .post(`${process.env.MAPQUEST_API_URL}/directions`, requestData)
           .then((response) => {
             console.log("I worked");
-            store.Direction.directions = response.data;
+            // store.Direction.directions = response.data;
             store.Direction.directions.maneuvers =
               response.data.route.legs[0].maneuvers;
-            // store.Direction.directions.push(response.data);
+            store.Direction.directions.push(response.data);
             router.navigate("/Direction");
           })
           .catch((error) => {
@@ -243,26 +242,11 @@ function afterRender(state) {
 
     //THIS could be how to add points from a returned value
 
-    // let directionsControl = L.mapquest
-    // .directionsControl({
-    //   className: "",
-    //   directions: {
-    //     options: {
-    //       timeOverage: 25,
-    //       doReverseGeocode: true,
-
-    L.mapquest.directions().route(
-      {
-        start: [""],
-        end: [""],
-        waypoints: ["", ""],
-      }
-      //,
-      // (error, response) => {
-      //   console.log("error", error);
-      //   console.log("directions call back", response);
-      // }
-    );
+    L.mapquest.directions().route({
+      start: [""],
+      end: [""],
+      waypoints: ["", ""],
+    });
 
     // if (state.view === "Map") {
     //   const mapEntry = document.querySelector("form");
@@ -354,19 +338,19 @@ router.hooks({
           })
           .catch((err) => console.log(err));
         break;
-      // case "Direction":
-      //   axios
-      //     .get(`${process.env.MAPQUEST_QUEST_API_URL}/routes`)
-      //     .then((response) => {
-      //       // Storing retrieved data in state
-      //       store.Direction.directions = response.data;
-      //       done();
-      //     })
-      //     .catch((error) => {
-      //       console.log("It puked", error);
-      //       done();
-      //     });
-      //   break;
+        // case "Direction":
+        //   axios
+        //     .get(`${process.env.MAPQUEST_QUEST_API_URL}/directions`)
+        //     .then((response) => {
+        //       // Storing retrieved data in state
+        //       store.Direction.directions = response.data;
+        //       done();
+        //     })
+        //     .catch((error) => {
+        //       console.log("It puked", error);
+        //       done();
+        //     });
+        break;
       default:
         done();
     }

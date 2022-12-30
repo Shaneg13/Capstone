@@ -1,7 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
-const routes = require("./routers/routes");
+const directions = require("./routers/directions");
 // const { request } = require("http");
 // const { response } = require("express");
 
@@ -61,7 +61,7 @@ app.post("/add", (request, response) => {
   response.json(responseBody);
 });
 
-app.use(".routes", routes);
+app.use(".directions", directions);
 
 const PORT = process.env.PORT || 4040;
 

@@ -1,11 +1,11 @@
 const { Router } = require("express");
-const Route = require("../models/Route");
+const Direction = require("../models/Direction");
 const router = Router();
 
 // Create record in MongoDB Atlas using Mongoose.js ORM
 router.post("/", (request, response) => {
-  const newMap = new Route(request.body);
-  newMap.save((error, record) => {
+  const newDirection = new Direction(request.body);
+  newDirection.save((error, record) => {
     if (error) return response.status(500).json(error);
     return response.json(record);
   });
@@ -13,7 +13,7 @@ router.post("/", (request, response) => {
 
 // Get (Read) all records from the collection/database
 router.get("/", (request, response) => {
-  Route.find({}, (error, record) => {
+  Direction.find({}, (error, record) => {
     if (error) return response.status(500).json(error);
     return response.json(record);
   });
