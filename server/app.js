@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const directions = require("./routers/directions");
+const { route } = require("./routers/directions");
 // const { request } = require("http");
 // const { response } = require("express");
 
@@ -60,17 +61,45 @@ app.get("/status", (request, response) => {
 //   };
 //   response.json(responseBody);
 // });
+let inputList = {};
 
-app.post("/add", (request, response) => {
-  const num1 = request.body.numberOne;
-  const num2 = request.body.numberTwo;
+app.get("/directions", (request, response) => {
+  const requestfromData = {
+    state: inputList.fromState,
+    city: inputList.fromCity,
+    street: inputList.fromStreet,
+  };
+  const requesttoData = {
+    state: inputList.toState,
+    city: inputList.toCity,
+    street: inputList.toStreet,
+  };
   const responseBody = {
-    sum: num1 + num2,
+    requestfromData,
+    requesttoData,
   };
   response.json(responseBody);
 });
 
-app.use(".directions", directions);
+app.post("/directions", (request, response) => {
+  const requestfromData = {
+    state: inputList.fromState,
+    city: inputList.fromCity,
+    street: inputList.fromStreet,
+  };
+  const requesttoData = {
+    state,
+    city,
+    street,
+  };
+  const responseBody = {
+    requestfromData,
+    requesttoData,
+  };
+  response.json(responseBody);
+});
+
+app.use(".direction", route, directions);
 
 const PORT = process.env.PORT || 4040;
 

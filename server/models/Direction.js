@@ -1,18 +1,18 @@
 const mongoose = require("mongoose");
 
 const directionSchema = new mongoose.Schema({
-  State: {
+  fromState: {
     type: String,
     required: true,
     validate: /^[A-Za-z0-9 ]*$/,
   },
-  City: {
+  fromCity: {
     type: String,
     required: true,
     validate: /^[A-Za-z0-9 ]*$/,
   },
 
-  Street: {
+  fromStreet: {
     type: String,
     required: true,
     validate: /^[A-Za-z0-9 ]*$/,

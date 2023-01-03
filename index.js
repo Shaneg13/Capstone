@@ -34,13 +34,13 @@ function afterRender(state) {
       console.log("shane-event:", event);
 
       directionList.classList.toggle("directions");
-      const inputList = event.target.elements;
+      let inputList = event.target.elements;
       console.log("Input Element List", inputList);
 
       const from = {
         street: inputList.fromStreet.value,
         city: inputList.fromCity.value,
-        state: inputList.fromStreet.value,
+        state: inputList.fromState.value,
       };
 
       store.Direction.from = from;
@@ -83,9 +83,9 @@ function afterRender(state) {
             `http://www.mapquestapi.com/directions/v2/route?key=${process.env.MAPQUEST_API_KEY}&from=${from.street},${from.city},${from.state}&to=${to.street},+${to.city},+${to.state}`
           )
           // axios
-          //   .post(
-          //     `http://www.mapquestapi.com/directions/v2/routematrix?key=${process.env.MAPQUEST_QUEST_API_URL}/directions`
-          //   )
+          // .post(
+          //   `http://www.mapquestapi.com/directions/v2/routematrix?key=${process.env.MAPQUEST_API_KEY}/directions`
+          // )
 
           .then((response) => {
             console.log("I worked");
