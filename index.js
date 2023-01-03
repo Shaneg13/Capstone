@@ -34,13 +34,13 @@ function afterRender(state) {
       console.log("shane-event:", event);
 
       directionList.classList.toggle("directions");
-      const inputList = event.target.elements;
+      let inputList = event.target.elements;
       console.log("Input Element List", inputList);
 
       const from = {
         street: inputList.fromStreet.value,
         city: inputList.fromCity.value,
-        state: inputList.fromStreet.value,
+        state: inputList.fromState.value,
       };
 
       store.Direction.from = from;
@@ -56,37 +56,45 @@ function afterRender(state) {
       store.Route.to = to;
 
       if (event.submitter.name === "showDirections") {
+        for (let input of inputList) {
+          if (inputList.input) {
+            inputList.push(input);
+          }
+        }
+
+        const requestfromData = {
+          state: inputList.fromState.value,
+          city: inputList.fromCity.value,
+          street: inputList.fromStreet.value,
+        };
+        const requesttoData = {
+          state: inputList.toState.value,
+          city: inputList.toCity.value,
+          street: inputList.toStreet.value,
+        };
+        console.log("request Body", requestfromData, requesttoData);
         /*
         Please refer to the documentation:
         https://developer.mapquest.com/documentation/directions-api/
       */
 
-        // const directions = [];
-        // for (let input of inputList.directions) {
-        //   if (input.checked) {
-        //     directions.push(input);
-        //   }
-        // }
-        const requestData = {
-          state: inputList.state,
-          city: inputList.city,
-          street: inputList.street,
-        };
-        console.log("request Body", requestData);
-
         await axios
           .get(
             `http://www.mapquestapi.com/directions/v2/route?key=${process.env.MAPQUEST_API_KEY}&from=${from.street},${from.city},${from.state}&to=${to.street},+${to.city},+${to.state}`
           )
-          // .post(`${process.env.MAPQUEST_API_URL}/directions`, requestData)
+          // axios
+          // .post(
+          //   `http://www.mapquestapi.com/directions/v2/routematrix?key=${process.env.MAPQUEST_API_KEY}/directions`
+          // )
+
           .then((response) => {
             console.log("I worked");
-            // store.Direction.directions = response.data;
+            store.Direction.directions = response.data;
             store.Direction.directions.maneuvers =
               response.data.route.legs[0].maneuvers;
-            store.Direction.directions.push(response.data);
             router.navigate("/Direction");
           })
+
           .catch((error) => {
             console.log("It puked", error);
             // return directionList;
