@@ -212,3 +212,24 @@ a:visited {
 .bio {
   text-align: center;
 }
+
+#directions {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.2em;
+  height: auto;
+  width: 92.5%;
+  margin: auto;
+}
+
+#directions tbody {
+  width: 100%;
+}
+
+#directions th {
+  text-align: right;
+}
+
+#directions td,
+th {
+  width: 25%;
+}

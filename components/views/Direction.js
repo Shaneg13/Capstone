@@ -31,35 +31,7 @@ export default (state) => html`
           required
         />
       </div>
-      <!-- <h3>Add a Second Location</h3>
-      <div>
-        <label for="toStreet">Street: </label>
-        <input
-          type="text"
-          name="toStreet"
-          id="toStreet"
-          placeholder="Enter Street Address"
-          required
-        />
-        <label for="toCity">City: </label>
-        <input
-          type="text"
-          name="toCity"
-          id="toCity"
-          placeholder="Enter City"
-          required
-        />
-        <label for="toState">State: </label>
-        <input
-          type="text"
-          name="toState"
-          id="toState"
-          placeholder="Enter State Initials"
-          required
-        />
-      </div>
-    </div>
-    <div id="toLocation"> -->
+
       <h3>Final Location</h3>
       <div class="fixit">
         <label for="toStreet">Street: </label>
@@ -113,7 +85,7 @@ function checkDirection(maneuvers) {
     );
   }
 
-  return `Please Submit Addresses Above!`;
+  return `Enter In The Addresses For Your Directions!`;
 }
 
 function outputMap(state) {
@@ -144,3 +116,4 @@ function outputMap(state) {
 //       <input type="submit" name="submitRoute" value="Submit Your Route" />
 //     </div>
 //   </form>
+// `;

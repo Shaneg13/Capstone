@@ -25,7 +25,7 @@ export default (state) => {
       </div>
       <a href="index.html"></a>
       <div class="weather">
-        <button id="imageloop" type="button">"Change Picture"</button>
+        <!-- <button id="imageloop" type="button">Change Picture</button> -->
         <h3>
           The weather in ${state.weather.city} is ${state.weather.description}.
           The temperature is ${state.weather.temp}F, and it feels like
