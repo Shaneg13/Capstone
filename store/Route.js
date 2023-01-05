@@ -1,4 +1,5 @@
 export default {
-  header: "Route",
+  header: "",
   view: "Route",
+  directions: [],
 };

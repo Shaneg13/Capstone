@@ -2,7 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const directions = require("./routers/directions");
-const { route } = require("./routers/directions");
+
 // const { request } = require("http");
 // const { response } = require("express");
 
@@ -45,61 +45,22 @@ app.get("/status", (request, response) => {
   response.status(200).json({ message: "Service Healthy" });
 });
 
-// app.get("/users/:id", (request, response) => {
-// express adds a "params" Object to requests
-// const id = request.params.id;
+// app.post("/directions", (request, response) => {
+//         const requestData = {
+//           fromState: inputList.fromState.value,
+//           fromCity: inputList.fromCity.value,
+//           fromStreet: inputList.fromStreet.value,
+//           toState: inputList.toState.value,
+//           toCity: inputList.toCity.value,
+//           toStreet: inputList.toStreet.value,
 
-// handle GET request for post with an id of "id"
-//   response.send(JSON.stringify({ user_id: is }));
-// });
-
-// app.post("/add", (request, response) => {
-//   const num1 = request.body.numberOne;
-//   const num2 = request.body.numberTwo;
 //   const responseBody = {
-//     sum: num1 + num2,
+//     requestfromData,
 //   };
-//   response.json(responseBody);
+//   response.send(JSON.stringify({ responseBody }));
 // });
-let inputList = {};
 
-app.get("/directions", (request, response) => {
-  const requestfromData = {
-    state: inputList.fromState,
-    city: inputList.fromCity,
-    street: inputList.fromStreet,
-  };
-  const requesttoData = {
-    state: inputList.toState,
-    city: inputList.toCity,
-    street: inputList.toStreet,
-  };
-  const responseBody = {
-    requestfromData,
-    requesttoData,
-  };
-  response.json(responseBody);
-});
-
-app.post("/directions", (request, response) => {
-  const requestfromData = {
-    state: inputList.fromState,
-    city: inputList.fromCity,
-    street: inputList.fromStreet,
-  };
-  const requesttoData = {
-    state,
-    city,
-    street,
-  };
-  const responseBody = {
-    requestfromData,
-    requesttoData,
-  };
-  response.json(responseBody);
-});
-
-app.use(".direction", route, directions);
+app.use("/directions", directions);
 
 const PORT = process.env.PORT || 4040;
 

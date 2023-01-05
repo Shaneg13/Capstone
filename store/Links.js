@@ -4,4 +4,5 @@ export default [
   { title: "Map", text: "Plan Your Trip" },
   { title: "Direction", text: "Directions" },
   { title: "Route", text: "Route" },
+  // { title: "Events", text: "Events" },
 ];

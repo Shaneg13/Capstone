@@ -6,7 +6,7 @@ import axios from "axios";
 import dotenv from "dotenv";
 dotenv.config();
 
-const router = new Navigo("/");
+const router = new Navigo("/", { strategy: "ALL" });
 
 function render(state = store.Home) {
   document.querySelector("#root").innerHTML = `
@@ -28,13 +28,13 @@ function afterRender(state) {
     const formEntry = document.querySelector("form");
     const directionList = document.querySelector(".directions");
 
-    formEntry.addEventListener("submit", async (event) => {
+    formEntry.addEventListener("submit", (event) => {
       event.preventDefault();
 
       console.log("shane-event:", event);
 
       directionList.classList.toggle("directions");
-      let inputList = event.target.elements;
+      const inputList = event.target.elements;
       console.log("Input Element List", inputList);
 
       const from = {
@@ -58,40 +58,51 @@ function afterRender(state) {
       if (event.submitter.name === "showDirections") {
         for (let input of inputList) {
           if (inputList.input) {
-            inputList.push(input);
+            inputList.push(input.value);
           }
         }
 
-        const requestfromData = {
-          state: inputList.fromState.value,
-          city: inputList.fromCity.value,
-          street: inputList.fromStreet.value,
+        const requestData = {
+          fromState: inputList.fromState.value,
+          fromCity: inputList.fromCity.value,
+          fromStreet: inputList.fromStreet.value,
+          toState: inputList.toState.value,
+          toCity: inputList.toCity.value,
+          toStreet: inputList.toStreet.value,
         };
-        const requesttoData = {
-          state: inputList.toState.value,
-          city: inputList.toCity.value,
-          street: inputList.toStreet.value,
-        };
-        console.log("request Body", requestfromData, requesttoData);
+
+        axios
+          .get(`${process.env.API_URL}`, requestData)
+          .then((response) => {
+            console.log(response.data);
+            store.Direction.directions.push(response.data);
+            router.navigate("/Route");
+          })
+          .catch((error) => {
+            console.log("WACK", error);
+          });
+
+        console.log("request Body", requestData);
         /*
         Please refer to the documentation:
         https://developer.mapquest.com/documentation/directions-api/
-      */
+        */
 
-        await axios
-          .get(
+        Promise.all([
+          axios.get(
             `http://www.mapquestapi.com/directions/v2/route?key=${process.env.MAPQUEST_API_KEY}&from=${from.street},${from.city},${from.state}&to=${to.street},+${to.city},+${to.state}`
-          )
-          // axios
-          // .post(
-          //   `http://www.mapquestapi.com/directions/v2/routematrix?key=${process.env.MAPQUEST_API_KEY}/directions`
-          // )
+          ),
+          axios.post(`${process.env.API_URL}/directions`, requestData),
+        ])
 
-          .then((response) => {
+          .then((responses) => {
             console.log("I worked");
-            store.Direction.directions = response.data;
+            const [mapquest, directions] = responses;
+            store.Direction.directions = mapquest.data;
             store.Direction.directions.maneuvers =
-              response.data.route.legs[0].maneuvers;
+              mapquest.data.route.legs[0].maneuvers;
+            store.Event.events.push(directions.data);
+            console.log(directions.data);
             router.navigate("/Direction");
           })
 
@@ -99,23 +110,26 @@ function afterRender(state) {
             console.log("It puked", error);
             // return directionList;
           });
-      }
-
-      if (event.submitter.name === "showRoute") {
-        router.navigate("/Route");
+      } else if (state.view === "Route") {
+        // axios
+        //   .get(`${process.env.API_URL}`, requestData)
+        //   .then((response) => {
+        //     console.log(response.data);
+        //     store.Direction.directions.push(response.data);
+        //     router.navigate("/Route");
+        //   })
+        //   .catch((error) => {
+        //     console.log("WACK", error);
+        //   });
       }
     });
-  }
-
-  if (state.view === "Map") {
+  } else if (state.view === "Map") {
     /*
     Please refer to the documentation:
     https://developer.mapquest.com/documentation/mapquest-js/v1.3/
   */
 
     L.mapquest.key = process.env.MAPQUEST_API_KEY;
-
-    // // 'map' refers to a <div> element with the ID map
 
     let map = L.mapquest.map("map", {
       center: [42.361145, -71.057083],
@@ -133,23 +147,6 @@ function afterRender(state) {
         })
       );
     }
-
-    // function addLayerControl(map) {
-    //   L.control
-    //     .layers(
-    //       {
-    //         Map: L.mapquest.tileLayer("map"),
-    //         Satellite: L.mapquest.tileLayer("satellite"),
-    //         Hybrid: L.mapquest.tileLayer("hybrid"),
-    //         Light: L.mapquest.tileLayer("light"),
-    //         Dark: baseLayer,
-    //         addLayerControl: true,
-    //       },
-    //       {},
-    //       { position: "topleft" }
-    //     )
-    //     .addTo(map);
-    // }
 
     let directionsControl = L.mapquest
       .directionsControl({
@@ -234,21 +231,20 @@ function afterRender(state) {
       })
       .addTo(map);
 
-    // L.mapquest
-    //   .textMarker([45, -120], {
-    //     text: "Coffee Shop",
-    //     subtext: "Iconic coffeehouse chain",
-    //     position: "right",
-    //     type: "marker",
-    //     icon: {
-    //       primaryColor: "#333333",
-    //       secondaryColor: "#333333",
-    //       size: "sm",
-    //     },
-    //   })
-    //   .addTo(map);
-
-    //THIS could be how to add points from a returned value
+    L.mapquest
+      .textMarker([42, -71], {
+        text: "Shane's Ride",
+        subtext: "Click Here for More Details",
+        position: "right",
+        type: "marker",
+        hover: "Howdy",
+        icon: {
+          primaryColor: "#333333",
+          secondaryColor: "#333333",
+          size: "sm",
+        },
+      })
+      .addTo(map);
 
     L.mapquest.directions().route({
       start: [""],
@@ -256,64 +252,39 @@ function afterRender(state) {
       waypoints: ["", ""],
     });
 
-    // if (state.view === "Map") {
-    //   const mapEntry = document.querySelector("form");
-    //   const mapdirectionList = document.querySelector(".map");
+    if (state.view === "Map") {
+      const mapEntry = document.querySelector("form");
+      const mapdirectionList = document.querySelector(".map");
 
-    //   mapEntry.addEventListener("submit", async (event) => {
-    //     event.preventDefault();
+      mapEntry.addEventListener("submit", async (event) => {
+        event.preventDefault();
 
-    //     console.log("shane-event:", event);
+        console.log("shane-event:", event);
 
-    //     // mapdirectionList.directionList.toggle(".maps");
+        // mapdirectionList.directionList.toggle(".maps");
 
-    //     const directionList = event.target.elements;
-    //     console.log("Direction List", directionList);
+        const directionList = event.target.elements;
+        console.log("Direction List", directionList);
 
-    //     const from = {
-    //       street: directionList.fromStreet,
-    //       city: directionList.fromCity,
-    //       state: directionList.fromStreet,
-    //     };
+        const from = {
+          street: directionList.fromStreet,
+          city: directionList.fromCity,
+          state: directionList.fromStreet,
+        };
 
-    //     store.Map.from = from;
-    //     store.Map.from = from;
+        store.Map.from = from;
+        store.Map.from = from;
 
-    //     const to = {
-    //       street: directionList.toStreet,
-    //       city: directionList.toCity,
-    //       state: directionList.toStreet,
-    //     };
+        const to = {
+          street: directionList.toStreet,
+          city: directionList.toCity,
+          state: directionList.toStreet,
+        };
 
-    //     store.Map.to = to;
-    //     store.Map.to = to;
-
-    //     if (event.submitter === "saveMap") {
-    //       /*
-    //       Please refer to the documentation:
-    //       https://developer.mapquest.com/documentation/directions-api/
-    //     */
-    //       axios
-    //         .post(
-    //           `http://www.mapquestapi.com/directions/v2/route?key=${process.env.MAPQUEST_API_KEY}&from=${from.street},${from.city},${from.state}&to=${to.street},+${to.city},+${to.state}/maps`
-    //         )
-    //         .post(`${process.env.MAPQUEST_QUEST_API_URL}/routes`)
-    //         // http://www.mapquestapi.com/datamanager/v2/get-column-types?key=KEY
-    //         .then((response) => {
-    //           store.Map.directions = response.data;
-    //           store.Map.directions.maneuvers =
-    //             response.data.route.legs[0].maneuvers;
-    //           router.navigate("/Map");
-    //         })
-    //         .catch((error) => {
-    //           console.log("It puked", error);
-    //         });
-    //     }
-    //     if (event.submitter === "saveMap") {
-    //       router.navigate("/Map");
-    //     }
-    //   });
-    // }
+        store.Map.to = to;
+        store.Map.to = to;
+      });
+    }
   }
 }
 
@@ -345,19 +316,6 @@ router.hooks({
             done();
           })
           .catch((err) => console.log(err));
-        break;
-        // case "Direction":
-        //   axios
-        //     .get(`${process.env.MAPQUEST_QUEST_API_URL}/directions`)
-        //     .then((response) => {
-        //       // Storing retrieved data in state
-        //       store.Direction.directions = response.data;
-        //       done();
-        //     })
-        //     .catch((error) => {
-        //       console.log("It puked", error);
-        //       done();
-        //     });
         break;
       default:
         done();
