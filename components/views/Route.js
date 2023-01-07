@@ -5,17 +5,24 @@ export default (state) => html`
   <h2>Route Map</h2>
   <section id="direction">
     <table id="directions">
+      <th><h2>Directions From</h2></th>
       <tr>
-        <th>State</th>
-        <th>Street</th>
-        <th>City</th>
+        <th>Street:</th>
+        <td>${state.routes.fromStreet}</td>
+        <th>City:</th>
+        <td>${state.routes.fromCity}</td>
+        <th>State:</th>
+        <td>${state.routes.fromState}</td>
       </tr>
-      ${state.directions
-        .map((direction) => {
-          //This is how to create a link back to a posted value - will be useful for the map :)
-          return `<tr><td><a href="/route/${direction.id}">${direction.from.state}</td><td>${direction.from.street}</td><td>${direction.from.city}</td></tr>`;
-        })
-        .join("")}
+      <th><h2>Directions To</h2></th>
+      <tr>
+        <th>Street:</th>
+        <td>${state.routes.toStreet}</td>
+        <th>City:</th>
+        <td>${state.routes.toCity}</td>
+        <th>State:</th>
+        <td>${state.routes.toState}</td>
+      </tr>
     </table>
   </section>
   <div class="routeMap">
