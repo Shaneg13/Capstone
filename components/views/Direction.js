@@ -59,14 +59,28 @@ export default (state) => html`
           required
         />
       </div>
+      <br>
+      <div class="fixit">
+        <h3>Ride Details</h3>
+        <label for="description"></label>
+        <input
+          type="text"
+          name="Details"
+          id="description"
+          placeholder="Enter Your Details"
+          required
+          />
+</div>
+
+      </div>
     </div>
     <div class="fixit">
       <input type="submit" name="showDirections" value="Show Directions" />
       <input type="submit" name="showRoute" value="Show Route" />
-      <label showRoute="showRoute">On Route Page</label>
+      <label showRoute="showRoute"></label>
     </div>
   </form>
-  <h2></h2>
+  ;
 
   <div class="routeMap">
     ${outputMap(state)}
@@ -85,7 +99,8 @@ function checkDirection(maneuvers) {
     );
   }
 
-  return `Enter In The Addresses For Your Directions!`;
+  return `Enter In The Addresses For Your Directions!
+  `;
 }
 
 function outputMap(state) {
@@ -100,20 +115,20 @@ function outputMap(state) {
 }
 
 // return html`
-//   <form id="route" method="POST" action="">
-//     <h3>Post to Events</h3>
-//     <div id="submitRoute"></div>
-//     <div class="fixit">
-//       <label for="routeDescription">Event Description: </label>
-//       <input
-//         type="text"
-//         name="routeDescription"
-//         id="routeDescription"
-//         placeholder="Please enter the details about your ride"
-//         required
-//       />
-//       <label for="submit">Click Here to Post Your Event:</label>
-//       <input type="submit" name="submitRoute" value="Submit Your Route" />
-//     </div>
-//   </form>
+// <form id="route" method="POST" action="">
+//   <h3>Post to Events</h3>
+//   <div id="submitRoute"></div>
+//   <div class="fixit">
+//     <label for="routeDescription">Event Description: </label>
+//     <input
+//       type="text"
+//       name="routeDescription"
+//       id="routeDescription"
+//       placeholder="Please enter the details about your ride"
+//       required
+//     />
+//     <label for="submit">Click Here to Post Your Event:</label>
+//     <input type="submit" name="submitRoute" value="Submit Your Route" />
+//   </div>
+// </form>
 // `;

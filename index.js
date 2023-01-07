@@ -71,16 +71,16 @@ function afterRender(state) {
           toStreet: inputList.toStreet.value,
         };
 
-        axios
-          .get(`${process.env.API_URL}`, requestData)
-          .then((response) => {
-            console.log(response.data);
-            store.Direction.directions.push(response.data);
-            router.navigate("/Route");
-          })
-          .catch((error) => {
-            console.log("WACK", error);
-          });
+        // axios
+        //   .get(`${process.env.API_URL}/directions`, requestData)
+        //   .then((response) => {
+        //     console.log(response.data);
+        //     store.Direction.directions.push(response.data);
+        //     router.navigate("/Route");
+        //   })
+        //   .catch((error) => {
+        //     console.log("WACK", error);
+        //   });
 
         console.log("request Body", requestData);
         /*
@@ -99,10 +99,11 @@ function afterRender(state) {
             console.log("I worked");
             const [mapquest, directions] = responses;
             store.Direction.directions = mapquest.data;
+            store.Route.routes = directions.data;
             store.Direction.directions.maneuvers =
               mapquest.data.route.legs[0].maneuvers;
             store.Event.events.push(directions.data);
-            console.log(directions.data);
+            console.log("I am Directions.data", directions.data);
             router.navigate("/Direction");
           })
 
@@ -110,20 +111,10 @@ function afterRender(state) {
             console.log("It puked", error);
             // return directionList;
           });
-      } else if (state.view === "Route") {
-        // axios
-        //   .get(`${process.env.API_URL}`, requestData)
-        //   .then((response) => {
-        //     console.log(response.data);
-        //     store.Direction.directions.push(response.data);
-        //     router.navigate("/Route");
-        //   })
-        //   .catch((error) => {
-        //     console.log("WACK", error);
-        //   });
       }
     });
-  } else if (state.view === "Map") {
+  }
+  if (state.view === "Map") {
     /*
     Please refer to the documentation:
     https://developer.mapquest.com/documentation/mapquest-js/v1.3/
@@ -256,7 +247,7 @@ function afterRender(state) {
       const mapEntry = document.querySelector("form");
       const mapdirectionList = document.querySelector(".map");
 
-      mapEntry.addEventListener("submit", async (event) => {
+      mapEntry.addEventListener("submit", (event) => {
         event.preventDefault();
 
         console.log("shane-event:", event);
