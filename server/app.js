@@ -45,20 +45,20 @@ app.get("/status", (request, response) => {
   response.status(200).json({ message: "Service Healthy" });
 });
 
-// app.post("/directions", (request, response) => {
-//         const requestData = {
-//           fromState: inputList.fromState.value,
-//           fromCity: inputList.fromCity.value,
-//           fromStreet: inputList.fromStreet.value,
-//           toState: inputList.toState.value,
-//           toCity: inputList.toCity.value,
-//           toStreet: inputList.toStreet.value,
-
-//   const responseBody = {
-//     requestfromData,
-//   };
-//   response.send(JSON.stringify({ responseBody }));
-// });
+app.post("/", (request, response) => {
+  const requestData = {
+    fromState: request.inputList.fromState.value,
+    fromCity: request.inputList.fromCity.value,
+    fromStreet: request.inputList.fromStreet.value,
+    toState: request.inputList.toState.value,
+    toCity: request.inputList.toCity.value,
+    toStreet: request.inputList.toStreet.value,
+  };
+  const responseBody = {
+    requestData,
+  };
+  response.json(responseBody);
+});
 
 app.use("/directions", directions);
 
