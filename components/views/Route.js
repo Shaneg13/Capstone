@@ -1,8 +1,7 @@
 import html from "html-literal";
-import Direction from "./Direction";
 
 export default (state) => html`
-  <h2>Route Map</h2>
+  <h2>Directions Data</h2>
   <section id="direction">
     <table id="directions">
       <th><h2>Directions From</h2></th>
@@ -24,10 +23,18 @@ export default (state) => html`
         <td>${state.routes.toState}</td>
       </tr>
     </table>
-  </section>
+
   <div class="routeMap">
-    ${outputMap(state)}
   </div>
+  <section id="direction">
+    <table id="directions">
+    <tr>
+      <th>Street</th>
+      <th>City</th>
+      <th>State</th>
+    </tr>
+  </section>
+  ${outputMap(state)}
 `;
 
 function outputMap(state) {

@@ -40,4 +40,19 @@ router.get("/:route", (request, response) => {
   });
 });
 
+router.post("/:Route", (request, response) => {
+  const requestData = {
+    fromState: request.inputList.fromState.value,
+    fromCity: request.inputList.fromCity.value,
+    fromStreet: request.inputList.fromStreet.value,
+    toState: request.inputList.toState.value,
+    toCity: request.inputList.toCity.value,
+    toStreet: request.inputList.toStreet.value,
+  };
+  const responseBody = {
+    requestData,
+  };
+  response.json(responseBody);
+});
+
 module.exports = router;

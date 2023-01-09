@@ -49,7 +49,7 @@ function afterRender(state) {
       const to = {
         street: inputList.toStreet.value,
         city: inputList.toCity.value,
-        state: inputList.toStreet.value,
+        state: inputList.toState.value,
       };
 
       store.Direction.to = to;
@@ -83,33 +83,31 @@ function afterRender(state) {
         //   });
 
         console.log("request Body", requestData);
-        /*
-        Please refer to the documentation:
-        https://developer.mapquest.com/documentation/directions-api/
-        */
 
         Promise.all([
           axios.get(
-            `http://www.mapquestapi.com/directions/v2/route?key=${process.env.MAPQUEST_API_KEY}&from=${from.street},${from.city},${from.state}&to=${to.street},+${to.city},+${to.state}`
+            `http://www.mapquestapi.com/directions/v2/route?key=${process.env.MAPQUEST_API_KEY}&from=${from.street},${from.city},${from.state}&to=${to.street},+${to.city},+${to.state}
+            ,`
           ),
           axios.post(`${process.env.API_URL}/directions`, requestData),
         ])
 
-          .then((responses) => {
+          .then((response) => {
             console.log("I worked");
-            const [mapquest, directions] = responses;
+            const [mapquest, directions] = response;
+            store.Direction.directions.push(response.data);
             store.Direction.directions = mapquest.data;
             store.Route.routes = directions.data;
             store.Direction.directions.maneuvers =
               mapquest.data.route.legs[0].maneuvers;
-            store.Event.events.push(directions.data);
+            store.Direction.routeSummary;
             console.log("I am Directions.data", directions.data);
+
             router.navigate("/Direction");
           })
 
           .catch((error) => {
             console.log("It puked", error);
-            // return directionList;
           });
       }
     });
@@ -278,7 +276,6 @@ function afterRender(state) {
     }
   }
 }
-
 router.hooks({
   before: (done, params) => {
     const view =
@@ -307,6 +304,20 @@ router.hooks({
             done();
           })
           .catch((err) => console.log(err));
+        break;
+
+      case "Route":
+        axios
+          .get(`${process.env.API_URL}/directions`)
+          .then((response) => {
+            // Storing retrieved data in state
+            store.Direction.directions = response.data;
+            done();
+          })
+          .catch((error) => {
+            console.log("No Good, Jack!", error);
+            done();
+          });
         break;
       default:
         done();
