@@ -60,7 +60,7 @@ export default (state) => html`
         />
       </div>
       <br>
-      <div class="fixit">
+      <!-- <div class="fixit">
         <h3>Ride Details</h3>
         <label for="description"></label>
         <input
@@ -68,8 +68,8 @@ export default (state) => html`
           name="Details"
           id="description"
           placeholder="Enter Your Details"
-          required
-          />
+          required -->
+          <!-- /> -->
 </div>
 
       </div>
