@@ -113,22 +113,3 @@ function outputMap(state) {
     return `<img src="https://www.mapquestapi.com/staticmap/v5/map?key=${process.env.MAPQUEST_API_KEY}&start=${state.from.street},${state.from.city},${state.from.state}&end=${state.to.street},+${state.to.city},+${state.to.state}&description=${state.description}&size=600,400@2x" alt="">`;
   }
 }
-
-// return html`
-// <form id="route" method="POST" action="">
-//   <h3>Post to Events</h3>
-//   <div id="submitRoute"></div>
-//   <div class="fixit">
-//     <label for="routeDescription">Event Description: </label>
-//     <input
-//       type="text"
-//       name="routeDescription"
-//       id="routeDescription"
-//       placeholder="Please enter the details about your ride"
-//       required
-//     />
-//     <label for="submit">Click Here to Post Your Event:</label>
-//     <input type="submit" name="submitRoute" value="Submit Your Route" />
-//   </div>
-// </form>
-// `;

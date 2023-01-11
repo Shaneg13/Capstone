@@ -2,11 +2,11 @@ const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const directions = require("./routers/directions");
-// const { get } = require("lodash");
-// const { request } = require("http");
+const { get } = require("lodash");
+const { request } = require("http");
 
 // const { request } = require("http");
-// const { response } = require("express");
+const { response } = require("express");
 
 dotenv.config();
 
