@@ -2,6 +2,8 @@ const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const directions = require("./routers/directions");
+// const { get } = require("lodash");
+// const { request } = require("http");
 
 // const { request } = require("http");
 // const { response } = require("express");
@@ -46,6 +48,21 @@ app.get("/status", (request, response) => {
 });
 
 app.post("/", (request, response) => {
+  const requestData = {
+    fromState: request.inputList.fromState.value,
+    fromCity: request.inputList.fromCity.value,
+    fromStreet: request.inputList.fromStreet.value,
+    toState: request.inputList.toState.value,
+    toCity: request.inputList.toCity.value,
+    toStreet: request.inputList.toStreet.value,
+  };
+  const responseBody = {
+    requestData,
+  };
+  response.json(responseBody);
+});
+
+app.get("/", (request, response) => {
   const requestData = {
     fromState: request.inputList.fromState.value,
     fromCity: request.inputList.fromCity.value,

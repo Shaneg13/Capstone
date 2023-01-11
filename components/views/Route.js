@@ -23,18 +23,25 @@ export default (state) => html`
         <td>${state.routes.toState}</td>
       </tr>
     </table>
+  </section>
 
-  <div class="routeMap">
-  </div>
+  <div class="routeMap"></div>
+
+  ${outputMap(state)}
   <section id="direction">
     <table id="directions">
-    <tr>
-      <th>Street</th>
-      <th>City</th>
-      <th>State</th>
-    </tr>
+      <table>
+        <th>
+          <h2>Stored Data</h2>
+        </th>
+        <tr>
+          <th>Street</th>
+          <th>City</th>
+          <th>State</th>
+        </tr>
+      </table>
+    </table>
   </section>
-  ${outputMap(state)}
 `;
 
 function outputMap(state) {
