@@ -29,9 +29,9 @@ export default (state) => html`
               <h2>Stored Data</h2>
             </th>
             <tr>
-              <th>Streets</th>
-              <th>Citys</th>
-              <th>States</th>
+              <th>Street</th>
+              <th>City</th>
+              <th>State</th>
             </tr>
           </table>
         </table>

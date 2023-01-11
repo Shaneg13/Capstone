@@ -316,27 +316,27 @@ router.hooks({
             // response.directions = response.data;
             console.log("I am response.data", response.data);
 
-            // response.data.forEach(
-            //   ({
-            //     fromStreet,
-            //     fromCity,
-            //     fromState,
-            //     toStreet,
-            //     toCity,
-            //     toState,
-            //   }) => {
-            //     console.log({
-            //       fromStreet,
-            //       fromCity,
-            //       fromState,
-            //       toStreet,
-            //       toCity,
-            //       toState,
-            //     });
-            //   }
-            // );
+            response.data.forEach(
+              ({
+                fromStreet,
+                fromCity,
+                fromState,
+                toStreet,
+                toCity,
+                toState,
+              }) => {
+                console.log({
+                  fromStreet,
+                  fromCity,
+                  fromState,
+                  toStreet,
+                  toCity,
+                  toState,
+                });
+              }
+            );
 
-            // console.log(response.directions);
+            console.log(response.directions);
             done();
           })
           .catch((error) => {
