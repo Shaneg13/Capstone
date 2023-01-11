@@ -95,12 +95,12 @@ function afterRender(state) {
           .then((response) => {
             console.log("I worked");
             const [mapquest, directions] = response;
-            store.Direction.directions.push(response.data);
             store.Direction.directions = mapquest.data;
             store.Route.routes = directions.data;
             store.Direction.directions.maneuvers =
               mapquest.data.route.legs[0].maneuvers;
             store.Direction.routeSummary;
+            // store.Direction.directions.push(response.data);
             console.log("I am Directions.data", directions.data);
 
             router.navigate("/Direction");
@@ -312,6 +312,31 @@ router.hooks({
           .then((response) => {
             // Storing retrieved data in state
             store.Direction.directions = response.data;
+            // response.directions = {};
+            // response.directions = response.data;
+            console.log("I am response.data", response.data);
+
+            // response.data.forEach(
+            //   ({
+            //     fromStreet,
+            //     fromCity,
+            //     fromState,
+            //     toStreet,
+            //     toCity,
+            //     toState,
+            //   }) => {
+            //     console.log({
+            //       fromStreet,
+            //       fromCity,
+            //       fromState,
+            //       toStreet,
+            //       toCity,
+            //       toState,
+            //     });
+            //   }
+            // );
+
+            // console.log(response.directions);
             done();
           })
           .catch((error) => {

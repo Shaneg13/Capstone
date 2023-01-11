@@ -7,7 +7,7 @@ export default (state) => html`
       <th><h2>Directions From</h2></th>
       <tr>
         <th>Street:</th>
-        <td>${state.routes.fromStreet}</td>
+        <td>${state.routes.fromCity}</td>
         <th>City:</th>
         <td>${state.routes.fromCity}</td>
         <th>State:</th>
@@ -22,26 +22,38 @@ export default (state) => html`
         <th>State:</th>
         <td>${state.routes.toState}</td>
       </tr>
+      <section id="direction">
+        <table id="directions">
+          <table>
+            <th>
+              <h2>Stored Data</h2>
+            </th>
+            <tr>
+              <th>Street</th>
+              <th>City</th>
+              <th>State</th>
+            </tr>
+          </table>
+        </table>
+      </section>
+      <div>
+        ${state.directions.map((direction) => {
+          //This is how to create a link back to a posted value - will be useful for the map :)
+          return `<tr><td>${direction.fromStreet}</td></tr>`;
+
+          // `<tr><td>${direction.id}">${fromStreet}</td><td>${
+          //   directions.toState
+          // }</td><td>${directions.toCity}</td><td>${directions.fromCity.join(
+          //   " & "
+          // )}</td><td>${directions.customer}</td></tr>`;
+        })}
+      </div>
     </table>
   </section>
 
   <div class="routeMap"></div>
 
   ${outputMap(state)}
-  <section id="direction">
-    <table id="directions">
-      <table>
-        <th>
-          <h2>Stored Data</h2>
-        </th>
-        <tr>
-          <th>Street</th>
-          <th>City</th>
-          <th>State</th>
-        </tr>
-      </table>
-    </table>
-  </section>
 `;
 
 function outputMap(state) {
