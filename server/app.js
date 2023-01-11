@@ -13,6 +13,8 @@ dotenv.config();
 // Initialize the Express application
 const app = express();
 
+//test
+
 mongoose.connect(process.env.MONGODB);
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "Connection Error:"));
